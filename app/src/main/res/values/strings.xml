@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Tablemate</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_choose_user">ChooseUserActivity</string>
+    <string name="title_activity_customer_home">CustomerHomeActivity</string>
+    <string name="title_activity_server_home">ServerHomeActivity</string>
+    <string name="title_activity_table">TableActivity</string>
+    <string name="title_activity_server">ServerActivity</string>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="title_activity_menu_detail">MenuDetailActivity</string>
+    <string name="title_activity_table_detail">TableDetailActivity</string>
+    <string name="title_activity_payment">PaymentActivity</string>
+</resources>

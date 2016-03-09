@@ -1,0 +1,17 @@
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+gradlew
+gradlew.bat
+.idea
+*.iml
+*.ipr
+*.iws
+*/bin/*
+*/gen/*
+*/build/*
+*/generated_source/*
