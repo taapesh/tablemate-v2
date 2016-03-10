@@ -1,39 +1,68 @@
 package com.aryamohades.tablemate.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
+import android.widget.Button;
 
 import com.aryamohades.tablemate.R;
+import com.aryamohades.tablemate.model.Table;
+import com.aryamohades.tablemate.model.User;
+import com.aryamohades.tablemate.service.ServiceFactory;
+import com.aryamohades.tablemate.service.TableService;
+import com.aryamohades.tablemate.utils.PreferencesManager;
+
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Bind;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class CustomerHomeActivity extends AppCompatActivity {
+    private final String ADDRESS = "1234 Restaurant St.";
+    private final String NAME = "Awesome Restaurant";
+    private final String NUMBER = "1";
+    private PreferencesManager prefs;
+    private User user;
+
+    @Bind(R.id.createTableBtn) Button createTableBtn;
+
+    @OnClick(R.id.createTableBtn)
+    public void createTable() {
+        TableService service = ServiceFactory.createService(TableService.class, TableService.API_BASE);
+        service.createOrJoinTable("Token " + user.getAccessToken(), NAME, ADDRESS, NUMBER)
+            .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Table>() {
+                    @Override
+                    public void onCompleted() {
+                        // not implemented
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("Customer Home Activity", e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(Table table) {
+                        System.out.println("Table creation success");
+                        System.out.println("Table size: " + table.getTableSize());
+                        Intent i = new Intent(CustomerHomeActivity.this, TableActivity.class);
+                        i.putExtra(Table.EXTRA_NAME, table);
+                        startActivity(i);
+                    }
+                });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_home);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_customer_home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        ButterKnife.bind(this);
+        prefs = new PreferencesManager(this);
+        user = prefs.getUser();
     }
 }

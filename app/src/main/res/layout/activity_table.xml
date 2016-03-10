@@ -6,7 +6,51 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.aryamohades.tablemate.activity.TableActivity">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/restaurantNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/serverNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/restaurantNameText" />
+
+    <TextView
+        android:id="@+id/partySizeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/serverNameText" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/partySizeText"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/requestServiceBtn"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:text="Request Service" />
+
+        <Button
+            android:id="@+id/orderBtn"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:text="Order" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/viewCheckBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:text="View Check"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

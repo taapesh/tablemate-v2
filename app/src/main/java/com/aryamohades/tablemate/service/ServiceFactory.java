@@ -2,6 +2,7 @@ package com.aryamohades.tablemate.service;
 
 import retrofit2.Retrofit;
 import okhttp3.OkHttpClient;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceFactory {
@@ -15,10 +16,10 @@ public class ServiceFactory {
      * @return retrofit service with defined endpoint
      */
     public static <T> T createService(final Class<T> clazz, final String endPoint) {
-        final Retrofit.Builder builder =
-            new Retrofit.Builder()
-                .baseUrl(endPoint)
-                .addConverterFactory(GsonConverterFactory.create());
+        final Retrofit.Builder builder = new Retrofit.Builder()
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(endPoint);
 
         Retrofit retrofit = builder.client(httpClient.build()).build();
         return retrofit.create(clazz);
