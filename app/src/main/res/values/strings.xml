@@ -12,4 +12,7 @@
     <string name="title_activity_menu_detail">MenuDetailActivity</string>
     <string name="title_activity_table_detail">TableDetailActivity</string>
     <string name="title_activity_payment">PaymentActivity</string>
+    <string name="title_activity_start">StartActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
 </resources>

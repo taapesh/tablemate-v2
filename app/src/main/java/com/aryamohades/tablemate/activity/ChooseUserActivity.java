@@ -24,10 +24,10 @@ public class ChooseUserActivity extends AppCompatActivity {
     private final String PASSWORD = "12345";
     private PreferencesManager prefs;
 
-    @Bind(R.id.chooseCustomerBtn) Button customerBtn;
-    @Bind(R.id.chooseServerBtn) Button serverBtn;
+    @Bind(R.id.btn_choose_customer) Button customerBtn;
+    @Bind(R.id.btn_choose_server) Button serverBtn;
 
-    @OnClick(R.id.chooseCustomerBtn)
+    @OnClick(R.id.btn_choose_customer)
     public void customerHome() {
         AuthService service = ServiceFactory.createService(AuthService.class, AuthService.API_BASE);
         service.login(EMAIL, PASSWORD)
@@ -54,7 +54,7 @@ public class ChooseUserActivity extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.chooseServerBtn)
+    @OnClick(R.id.btn_choose_server)
     public void serverHome() {
         // Login with server
         Intent i = new Intent(ChooseUserActivity.this, ServerHomeActivity.class);

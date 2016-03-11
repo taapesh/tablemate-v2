@@ -7,39 +7,39 @@
     tools:context="com.aryamohades.tablemate.activity.TableActivity">
 
     <TextView
-        android:id="@+id/restaurantNameText"
+        android:id="@+id/txt_restaurant_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:id="@+id/serverNameText"
+        android:id="@+id/txt_server_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/restaurantNameText" />
+        android:layout_below="@+id/txt_restaurant_name" />
 
     <TextView
-        android:id="@+id/partySizeText"
+        android:id="@+id/txt_party_size"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/serverNameText" />
+        android:layout_below="@+id/txt_server_name" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/partySizeText"
+        android:layout_below="@+id/txt_party_size"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/requestServiceBtn"
+            android:id="@+id/btn_request_service"
             android:layout_width="150dp"
             android:layout_height="80dp"
             android:text="Request Service" />
 
         <Button
-            android:id="@+id/orderBtn"
+            android:id="@+id/btn_order"
             android:layout_width="150dp"
             android:layout_height="80dp"
             android:text="Order" />
@@ -47,7 +47,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/viewCheckBtn"
+        android:id="@+id/btn_view_check"
         android:layout_width="fill_parent"
         android:layout_height="60dp"
         android:text="View Check"

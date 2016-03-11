@@ -1,5 +1,6 @@
 package com.aryamohades.tablemate.service;
 
+import com.aryamohades.tablemate.model.ServerRegistration;
 import com.aryamohades.tablemate.model.User;
 
 import org.json.JSONObject;
@@ -27,5 +28,13 @@ public interface AuthService {
             @Field("last_name") String lastName,
             @Field("email") String email,
             @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST
+    Observable<ServerRegistration>  registerServer(
+            @Field("server_id") String serverId,
+            @Field("restaurant_name") String restaurantName,
+            @Field("restaurant_address") String restaurantAddr
     );
 }

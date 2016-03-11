@@ -27,9 +27,9 @@ public class CustomerHomeActivity extends AppCompatActivity {
     private PreferencesManager prefs;
     private User user;
 
-    @Bind(R.id.createTableBtn) Button createTableBtn;
+    @Bind(R.id.btn_create_table) Button createTableBtn;
 
-    @OnClick(R.id.createTableBtn)
+    @OnClick(R.id.btn_create_table)
     public void createTable() {
         TableService service = ServiceFactory.createService(TableService.class, TableService.API_BASE);
         service.createOrJoinTable("Token " + user.getAccessToken(), NAME, ADDRESS, NUMBER)

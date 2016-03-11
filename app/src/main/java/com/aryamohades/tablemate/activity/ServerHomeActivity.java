@@ -14,9 +14,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ServerHomeActivity extends AppCompatActivity {
-    @Bind(R.id.startServingBtn) Button startServingBtn;
+    @Bind(R.id.btn_start_serving) Button startServingBtn;
 
-    @OnClick(R.id.startServingBtn)
+    @OnClick(R.id.btn_start_serving)
     public void startServing() {
         Intent i = new Intent(ServerHomeActivity.this, ServerActivity.class);
         startActivity(i);

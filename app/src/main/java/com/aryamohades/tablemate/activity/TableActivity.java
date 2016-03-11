@@ -27,21 +27,21 @@ import rx.schedulers.Schedulers;
 public class TableActivity extends AppCompatActivity {
     private User user;
 
-    @Bind(R.id.restaurantNameText) TextView tvRestaurantName;
-    @Bind(R.id.serverNameText) TextView tvServerName;
-    @Bind(R.id.partySizeText) TextView tvPartySize;
+    @Bind(R.id.txt_restaurant_name) TextView tvRestaurantName;
+    @Bind(R.id.txt_server_name) TextView tvServerName;
+    @Bind(R.id.txt_party_size) TextView tvPartySize;
 
-    @Bind(R.id.viewCheckBtn) Button viewCheckBtn;
-    @Bind(R.id.requestServiceBtn) Button requestServiceBtn;
-    @Bind(R.id.orderBtn) Button orderBtn;
+    @Bind(R.id.btn_view_check) Button viewCheckBtn;
+    @Bind(R.id.btn_request_service) Button requestServiceBtn;
+    @Bind(R.id.btn_order) Button orderBtn;
 
-    @OnClick(R.id.orderBtn)
+    @OnClick(R.id.btn_order)
     public void goToMenu() {
         Intent i = new Intent(TableActivity.this, MenuActivity.class);
         startActivity(i);
     }
 
-    @OnClick(R.id.requestServiceBtn)
+    @OnClick(R.id.btn_request_service)
     public void requestService() {
         TableService service = ServiceFactory.createService(TableService.class, TableService.API_BASE);
         service.requestService("Token " + user.getAccessToken())
@@ -66,10 +66,9 @@ public class TableActivity extends AppCompatActivity {
                         }
                     }
                 });
-
     }
 
-    @OnClick(R.id.viewCheckBtn)
+    @OnClick(R.id.btn_view_check)
     public void goToPayment() {
         Intent i = new Intent(TableActivity.this, PaymentActivity.class);
         startActivity(i);
@@ -96,10 +95,9 @@ public class TableActivity extends AppCompatActivity {
                     @Override
                     public void onNext(Table table) {
                         Log.d("Table Activity", "Table retrieved");
-                        // TODO: X requested service Ym ago
+                        // TODO: X requested service Y m ago
                     }
                 });
-
     }
 
     @Override
