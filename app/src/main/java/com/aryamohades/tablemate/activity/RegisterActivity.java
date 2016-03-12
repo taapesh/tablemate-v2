@@ -11,94 +11,137 @@ import com.aryamohades.tablemate.model.ServerRegistration;
 import com.aryamohades.tablemate.model.User;
 import com.aryamohades.tablemate.service.AuthService;
 import com.aryamohades.tablemate.service.ServiceFactory;
+import com.aryamohades.tablemate.utils.TestAPI;
+
+import org.json.JSONObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Response;
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class RegisterActivity extends AppCompatActivity {
-    private final String TEST_SERVER_EMAIL = "testserver@gmail.com";
-    private final String TEST_CUSTOMER_EMAIL = "testcustomer@gmail.com";
-    private final String TEST_PASS = "12345";
-    private final String TEST_RESTAURANT_NAME = "Awesome Restaurant";
-    private final String TEST_RESTAURANT_ADDR = "12345 Restaurant St.";
-
 
     @Bind(R.id.btn_register_customer_test) Button customerTestBtn;
     @Bind(R.id.btn_register_server_test) Button serverTestBtn;
+    @Bind(R.id.btn_clear_tests) Button clearTestsBtn;
 
-    @OnClick(R.id.btn_register_customer_test)
-    public void registerCustomer() {
+    @OnClick(R.id.btn_clear_tests)
+    public void clearTests() {
         AuthService service = ServiceFactory.createService(AuthService.class, AuthService.API_BASE);
-        service.register("Bruce", "Wayne", TEST_CUSTOMER_EMAIL, TEST_PASS)
+        service.clearTests()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<User>() {
+                .subscribe(new Subscriber<Response<JSONObject>>() {
                     @Override
                     public void onCompleted() {
-                        // not implemented
+                        // Not implemented
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("Choose User Activity", e.getMessage());
+                        Log.e("RegisterActivity", e.getMessage());
                     }
 
                     @Override
-                    public void onNext(User user) {
-                        Toast.makeText(RegisterActivity.this, "Registered Customer", Toast.LENGTH_LONG).show();
+                    public void onNext(Response<JSONObject> res) {
+                        Log.d("RegisterActivity", "Cleared tests");
                     }
                 });
+    }
+
+    @OnClick(R.id.btn_register_customer_test)
+    public void registerCustomer() {
+        AuthService service = ServiceFactory.createService(AuthService.class, AuthService.API_BASE);
+
+        Observable<User> o =
+            service.register(
+                    TestAPI.FIRST_NAME,
+                    TestAPI.LAST_NAME,
+                    TestAPI.CUSTOMER_EMAIL,
+                    TestAPI.PASSWORD);
+
+        o.subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Subscriber<User>() {
+                @Override
+                public void onCompleted() {
+                    // not implemented
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    Log.e("Choose User Activity", e.getMessage());
+                }
+
+                @Override
+                public void onNext(User user) {
+                    Toast.makeText(RegisterActivity.this, "Registered Customer", Toast.LENGTH_LONG).show();
+                }
+            });
     }
 
     @OnClick(R.id.btn_register_server_test)
     public void registerServer() {
         AuthService service = ServiceFactory.createService(AuthService.class, AuthService.API_BASE);
-        service.register("Alfred", "Pennyworth", TEST_SERVER_EMAIL, TEST_PASS)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<User>() {
-                    @Override
-                    public void onCompleted() {
-                        // Not implemented
-                    }
+        Observable<User> o =
+            service.register(
+                    TestAPI.SERVER_FIRST_NAME,
+                    TestAPI.SERVER_LAST_NAME,
+                    TestAPI.SERVER_EMAIL,
+                    TestAPI.PASSWORD);
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("Register Activity", e.getMessage());
-                    }
+        o.subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Subscriber<User>() {
+                @Override
+                public void onCompleted() {
+                    // Not implemented
+                }
 
-                    @Override
-                    public void onNext(User user) {
-                        registerEmployee(user.getUserId());
-                    }
-                });
+                @Override
+                public void onError(Throwable e) {
+                    Log.e("Register Activity", e.getMessage());
+                }
+
+                @Override
+                public void onNext(User user) {
+                    Toast.makeText(RegisterActivity.this, "Registered Server", Toast.LENGTH_SHORT).show();
+                    registerEmployee(user.getUserId());
+                }
+            });
     }
 
     private void registerEmployee(String id) {
         AuthService service = ServiceFactory.createService(AuthService.class, AuthService.API_BASE);
-        service.registerServer(id, TEST_RESTAURANT_NAME, TEST_RESTAURANT_ADDR)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<ServerRegistration>() {
-                    @Override
-                    public void onCompleted() {
-                        // Not implemented
-                    }
+        Observable<ServerRegistration> o =
+            service.registerServer(
+                id,
+                TestAPI.RESTAURANT_NAME,
+                TestAPI.RESTAURANT_ADDR);
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("Register Activity", e.getMessage());
-                    }
+        o.subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Subscriber<ServerRegistration>() {
+                @Override
+                public void onCompleted() {
+                    // Not implemented
+                }
 
-                    @Override
-                    public void onNext(ServerRegistration serverRegistration) {
-                        Toast.makeText(RegisterActivity.this, "Registered Server", Toast.LENGTH_LONG).show();
-                    }
-                });
+                @Override
+                public void onError(Throwable e) {
+                    Log.e("Register Activity", e.getMessage());
+                }
+
+                @Override
+                public void onNext(ServerRegistration serverRegistration) {
+                    Toast.makeText(RegisterActivity.this, "Registered Employee", Toast.LENGTH_LONG).show();
+                }
+            });
     }
 
     @Override

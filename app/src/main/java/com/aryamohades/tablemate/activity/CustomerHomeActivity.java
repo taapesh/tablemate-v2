@@ -12,18 +12,17 @@ import com.aryamohades.tablemate.model.User;
 import com.aryamohades.tablemate.service.ServiceFactory;
 import com.aryamohades.tablemate.service.TableService;
 import com.aryamohades.tablemate.utils.PreferencesManager;
+import com.aryamohades.tablemate.utils.TestAPI;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Bind;
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class CustomerHomeActivity extends AppCompatActivity {
-    private final String ADDRESS = "1234 Restaurant St.";
-    private final String NAME = "Awesome Restaurant";
-    private final String NUMBER = "1";
     private PreferencesManager prefs;
     private User user;
 
@@ -32,29 +31,36 @@ public class CustomerHomeActivity extends AppCompatActivity {
     @OnClick(R.id.btn_create_table)
     public void createTable() {
         TableService service = ServiceFactory.createService(TableService.class, TableService.API_BASE);
-        service.createOrJoinTable("Token " + user.getAccessToken(), NAME, ADDRESS, NUMBER)
-            .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Table>() {
-                    @Override
-                    public void onCompleted() {
-                        // not implemented
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("Customer Home Activity", e.getMessage());
-                    }
+        Observable<Table> o =
+            service.createOrJoinTable(
+                "Token " + user.getAccessToken(),
+                TestAPI.RESTAURANT_NAME,
+                TestAPI.RESTAURANT_ADDR,
+                TestAPI.TABLE_NUMBER);
 
-                    @Override
-                    public void onNext(Table table) {
-                        System.out.println("Table creation success");
-                        System.out.println("Table size: " + table.getTableSize());
-                        Intent i = new Intent(CustomerHomeActivity.this, TableActivity.class);
-                        i.putExtra(Table.EXTRA_NAME, table);
-                        startActivity(i);
-                    }
-                });
+        o.subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Subscriber<Table>() {
+                @Override
+                public void onCompleted() {
+                    // not implemented
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    Log.e("Customer Home Activity", e.getMessage());
+                }
+
+                @Override
+                public void onNext(Table table) {
+                    System.out.println("Table creation success");
+                    System.out.println("Table size: " + table.getTableSize());
+                    Intent i = new Intent(CustomerHomeActivity.this, TableActivity.class);
+                    i.putExtra(Table.EXTRA_NAME, table);
+                    startActivity(i);
+                }
+            });
     }
 
     @Override

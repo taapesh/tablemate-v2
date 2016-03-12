@@ -23,7 +23,7 @@ public interface TableService {
     Observable<Table> getActiveTable(@Header("Authorization") String token);
 
     @FormUrlEncoded
-    @POST("tables/")
+    @POST("table/create_table/")
     Observable<Table> createOrJoinTable(
         @Header("Authorization") String token,
         @Field("restaurant_name") String name,

@@ -19,10 +19,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.ChooseUserActivity"
-            android:label="@string/title_activity_choose_user" >
-        </activity>
-        <activity
             android:name=".activity.CustomerHomeActivity"
             android:label="@string/title_activity_customer_home" >
         </activity>
