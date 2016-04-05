@@ -7,6 +7,10 @@ public class User {
     private String email;
     private String auth_token;
 
+    public String token() {
+        return "Token " + auth_token;
+    }
+
     public String getAccessToken() {
         return auth_token;
     }
@@ -25,5 +29,9 @@ public class User {
 
     public String getLastName() {
         return last_name;
+    }
+
+    public String getFullName() {
+        return first_name + " " + last_name;
     }
 }

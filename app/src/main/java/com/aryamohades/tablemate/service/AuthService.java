@@ -1,9 +1,6 @@
 package com.aryamohades.tablemate.service;
 
-import com.aryamohades.tablemate.model.ServerRegistration;
 import com.aryamohades.tablemate.model.User;
-
-import org.json.JSONObject;
 
 import retrofit2.Response;
 import retrofit2.http.Field;
@@ -14,14 +11,14 @@ import retrofit2.http.POST;
 import rx.Observable;
 
 public interface AuthService {
-    String API_BASE = "https://mysterious-journey-88182.herokuapp.com/auth/";
+    String ENDPOINT = "http://10.0.3.2:8000/auth/";
 
     @FormUrlEncoded
     @POST("login/")
     Observable<User> login(@Field("email") String email, @Field("password") String password);
 
     @POST("logout/")
-    Observable<JSONObject> logout(@Header("Authorization") String token);
+    Observable<Response<Void>> logout(@Header("Authorization") String token);
 
     @FormUrlEncoded
     @POST("register/")
@@ -29,17 +26,8 @@ public interface AuthService {
             @Field("first_name") String firstName,
             @Field("last_name") String lastName,
             @Field("email") String email,
-            @Field("password") String password
-    );
+            @Field("password") String password);
 
-    @FormUrlEncoded
-    @POST("register_server/")
-    Observable<ServerRegistration>  registerServer(
-            @Field("server_id") String serverId,
-            @Field("restaurant_name") String restaurantName,
-            @Field("restaurant_addr") String restaurantAddr
-    );
-
-    @GET("clear_tests/")
-    Observable<Response<JSONObject>> clearTests();
+    @POST("clear/")
+    Observable<Response<Void>> clearDatabase();
 }

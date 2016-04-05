@@ -1,0 +1,15 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="?attr/actionBarSize">
+
+    <Button
+        android:id="@+id/start_serving"
+        style="@style/button"
+        android:layout_width="fill_parent"
+        android:text="Start Serving"
+        android:layout_marginTop="25dp"/>
+
+</RelativeLayout>

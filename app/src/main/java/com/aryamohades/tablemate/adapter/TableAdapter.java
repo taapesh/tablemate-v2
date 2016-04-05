@@ -4,13 +4,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.aryamohades.tablemate.R;
 import com.aryamohades.tablemate.model.Table;
 
 import java.util.ArrayList;
-
-import butterknife.ButterKnife;
 
 public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> {
     private ArrayList<Table> tables;
@@ -52,15 +51,18 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         final Table table = tables.get(i);
-        // viewHolder.size.setText(table.getSize());
+        viewHolder.tableNumber.setText(table.getTableNumber());
+        viewHolder.partySize.setText(""+table.getSize());
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        // @Bind(R.id.login) TextView login;
+        TextView tableNumber;
+        TextView partySize;
+
         public ViewHolder(View view) {
             super(view);
-            ButterKnife.bind(this, view);
-            // login = (TextView) itemView.findViewById(R.id.login);
+            tableNumber = (TextView) view.findViewById(R.id.table_number);
+            partySize = (TextView) view.findViewById(R.id.party_size);
         }
     }
 }
